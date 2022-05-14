@@ -166,5 +166,46 @@ public class Payment {
 		 
 		  return output;  
 		} 
+		
+		//delete
+		
+		public String deletePayment(String PaymentID)   
+		{   
+			String output = ""; 
+		 
+			try   
+			{    
+				Connection con = connect(); 
+		 
+				if (con == null)    
+				{
+					return "Error while connecting to the database for deleting."; 
+					
+				} 
+		 
+				// create a prepared statement    
+				String query = "delete from pay where PaymentID=?";  
+		 
+				PreparedStatement preparedStmt = con.prepareStatement(query); 
+		 
+				// binding values    
+				preparedStmt.setInt(1, Integer.parseInt(PaymentID)); 
+		 
+				// execute the statement    
+				preparedStmt.execute();    
+				con.close(); 
+		 
+				String newPayment = readPayment();  
+				    
+				output = "{\"status\":\"success\", \"data\": \"" +  newPayment + "\"}";    
+			}   
+			catch (Exception e)   
+			{    
+				output = "Error while deleting the Innovator.";    
+				System.err.println(e.getMessage());   
+			} 
+		 
+			return output;  
+		}
 
 }
