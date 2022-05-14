@@ -50,5 +50,21 @@ public class PaymentService extends HttpServlet {
 	 
 				response.getWriter().write(output);
 	}
+	
+	/**
+	 * @see HttpServlet#doPut(HttpServletRequest, HttpServletResponse)
+	 */
+	protected void doPut(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method
+
+		Map paras = getParasMap(request); 
+		 
+		 String output = payObj.updatePayment(paras.get("hidPaymentIDSave").toString(),     
+		    		paras.get("CustomerName").toString(),     
+		    		paras.get("BillAmount").toString(),
+		    		paras.get("AccountNo").toString()); 
+		 
+		 			response.getWriter().write(output);
+	}
   
 }
