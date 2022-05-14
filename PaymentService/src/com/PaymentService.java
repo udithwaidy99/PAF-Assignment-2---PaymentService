@@ -66,5 +66,18 @@ public class PaymentService extends HttpServlet {
 		 
 		 			response.getWriter().write(output);
 	}
+	
+	/**
+	 * @see HttpServlet#doDelete(HttpServletRequest, HttpServletResponse)
+	 */
+	protected void doDelete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
+		
+		Map paras = getParasMap(request); 
+		 
+		 String output = payObj.deletePayment(paras.get("PaymentID").toString());  
+		 
+		 response.getWriter().write(output);
+	}
   
 }
