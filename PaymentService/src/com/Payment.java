@@ -126,5 +126,45 @@ public class Payment {
 		 
 			return output;  
 		}
+		
+		//update
+		
+		public String updatePayment(String PaymentID, String CustomerName, String BillAmount, String AccountNo)  
+		{   
+			String output = ""; 
+		 
+			try   
+			{    
+				Connection con = connect(); 
+		 
+				if (con == null)    
+				{return "Error while connecting to the database for updating."; } 
+		 
+				// create a prepared statement    
+				String query = "UPDATE pay SET CustomerName=?,BillAmount=?,AccountNo=? WHERE PaymentID=?"; 
+		 
+				PreparedStatement preparedStmt = con.prepareStatement(query); 
+		 
+				// binding values    
+				preparedStmt.setString(1, CustomerName);
+				 preparedStmt.setString(2, BillAmount);
+				 preparedStmt.setString(3, AccountNo);
+				 preparedStmt.setInt(4, Integer.parseInt(PaymentID)); 
+		 
+				// execute the statement    
+				preparedStmt.execute();    
+				con.close(); 
+		 
+				String newPayment = readPayment();    
+				output = "{\"status\":\"success\", \"data\": \"" + newPayment + "\"}";    
+			}   
+			catch (Exception e)   
+			{    
+				output =  "{\"status\":\"error\", \"data\": \"Error while updating the Payment.\"}";   
+				System.err.println(e.getMessage());   
+			} 
+		 
+		  return output;  
+		} 
 
 }
